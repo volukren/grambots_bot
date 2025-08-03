@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Chat {
+  id BigInt @id @map("id")
+  username String? @map("username")
+  firstName String? @map("first_name")
+  lastName String? @map("last_name")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  submissions BotSubmission[]
+
+  @@map("chats")
+}
+
+enum BotSubmissionStatus {
+  created
+  paid
+  approved
+}
+
+model BotSubmission {
+  id Int @id @default(autoincrement())
+  username String @unique
+  status BotSubmissionStatus @default(created)
+
+  chatId BigInt @map("chat_id")
+  chat Chat @relation(fields: [chatId], references: [id])
+
+  @@map("bot_submissions")
+}
