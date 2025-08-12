@@ -52,7 +52,7 @@ export default async function handleMessage(
 
   // Check if user is admin and set payment amount accordingly
   const isAdmin = ctx.dbChat.id === ADMIN_CHAT_ID;
-  const amount = isAdmin ? 1 : 500;
+  const amount = isAdmin ? 1 : 100;
 
   // Send invoice for payment
   return ctx.replyWithInvoice(
